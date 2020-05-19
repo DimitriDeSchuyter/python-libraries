@@ -69,7 +69,9 @@ class docker:
             command.exec("docker-compose up " + flags + " " + extra);
 
         @staticmethod # DOCKER COMPOSE RUN
-        def run(flags, container, cmd = None):
+        def run(flags = None, container, cmd = None):
+            if flags == None:
+                flags = "";
             if cmd == None:
                 cmd = "";
             command.exec("docker-compose run " + flags + " " + container + " " + cmd);
@@ -89,6 +91,12 @@ class docker:
             if extra == None:
                 extra = "";
             command.exec("docker-compose stop " + flags + " " + extra);
+        
+         @staticmethod # DOCKER COMPOSE EXEC
+        def exec(flags = None, container, cmd):
+            if flags == None:
+                flags = "";
+            command.exec("docker-compose exec " + flags + " " + container + " bash -c \"" + cmd.replace("\\","\\\\").replace("\"","\\\"") + "\""); 
 
 class dockerError(Exception):
     pass
