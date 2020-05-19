@@ -69,7 +69,7 @@ class docker:
             command.exec("docker-compose up " + flags + " " + extra);
 
         @staticmethod # DOCKER COMPOSE RUN
-        def run(flags = None, service, cmd = None):
+        def run(flags, service, cmd = None):
             if flags == None:
                 flags = "";
             if cmd == None:
