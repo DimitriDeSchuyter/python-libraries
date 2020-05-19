@@ -92,7 +92,7 @@ class docker:
                 extra = "";
             command.exec("docker-compose stop " + flags + " " + extra);
         
-         @staticmethod # DOCKER COMPOSE EXEC
+        @staticmethod # DOCKER COMPOSE EXEC
         def exec(flags = None, container, cmd):
             if flags == None:
                 flags = "";
