@@ -31,7 +31,7 @@ class docker:
     class container:
         @staticmethod # CONTAINER EXISTS
         def exists(container):
-            cmd = "docker ps -q -f name=\"" + container.replace("\"", "\\\"") + "\"";
+            cmd = "docker ps -q -f name=\"^" + container.replace("\"", "\\\"") + "$\"";
             id = len(list(filter(None,command.exec(cmd, False).split("\n"))));
             if id == 0:
                 raise dockerError("Container `" + container + "` doesn't exist");
@@ -41,7 +41,7 @@ class docker:
     class volume:
         @staticmethod # VOLUME EXISTS
         def exists(volume):
-            cmd = "docker volume ls -q -f name=\"" + volume.replace("\"", "\\\"") + "\"";
+            cmd = "docker volume ls -q -f name=\"^" + volume.replace("\"", "\\\"") + "$\"";
             id = len(list(filter(None,command.exec(cmd, False).split("\n"))));
             if id == 0:
                 raise dockerError("Volume `" + volume + "` doesn't exist");
@@ -51,7 +51,7 @@ class docker:
     class network:
         @staticmethod # NETWORK EXISTS
         def exists(network):
-            cmd = "docker network ls -q -f name=\"" + network.replace("\"", "\\\"") + "\"";
+            cmd = "docker network ls -q -f name=\"^" + network.replace("\"", "\\\"") + "$\"";
             id = len(list(filter(None,command.exec(cmd, False).split("\n"))));
             if id == 0:
                 raise dockerError("Network `" + network + "` doesn't exist");
