@@ -10,8 +10,9 @@ from color import color
 
 class echo:
     # CONSTRUCTOR
-    def __init__(self):
-        pass
+    def __init__(self, text):
+        echo.warning("Unnecessary use of echo class, use print instead");
+        print(text);
 
     @staticmethod # TITLE BLOCK
     def title(title):
@@ -40,6 +41,10 @@ class echo:
     def comment(text):
         echo.section(None, text, color.green);
 
+    @staticmethod # COMMENT LINE
+    def notice(text):
+        echo.section(" NOTICE", text, color.green);
+
     @staticmethod # WARNING LINE
     def warning(text):
         echo.section(" WARNING", text, color.yellow);
@@ -52,7 +57,7 @@ class echo:
     def debug(text):
         echo.section(" DEBUG", text, color.purple);
 
-    @staticmethod # DEBUG LINE
+    @staticmethod # PROMPT LINE
     def prompt(variable, password = False):
         echo.section(" PROMPT", variable + " = ", color.green);
         return input("");
