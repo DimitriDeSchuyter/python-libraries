@@ -13,4 +13,4 @@ A basic set of python libraries for ease of use while writing python scripts.
 #### color
 
 # [Author](AUTHOR.md)
-Author information is available in the [AUTHOR.md](AUTOR.md) file.
+Author information is available in the [AUTHOR.md](AUTHOR.md) file.
