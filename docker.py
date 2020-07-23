@@ -27,6 +27,15 @@ class docker:
         cmd = "docker cp " + source + " " + destination;
         command.exec(cmd);
 
+    @staticmethod # DOCKER LOGS
+    def logs(flags, container):
+        try:
+           docker.container.exists(container);
+        except dockerError as e:
+            echo.error(str(e));
+            sys.exit(1);
+        cmd = "docker logs " + flags + " " + container;
+        return command.exec(cmd);
 
     class container:
         @staticmethod # CONTAINER EXISTS
@@ -91,6 +100,15 @@ class docker:
             if extra == None:
                 extra = "";
             command.exec("docker-compose stop " + flags + " " + extra);
+
+        @staticmethod # DOCKER COMPOSE RESTART
+        def restart(flags = None, extra = None):
+            if flags == None:
+                flags = "";
+            if extra == None:
+                extra = "";
+            command.exec("docker-compose restart " + flags + " " + extra);
+
         @staticmethod # DOCKER COMPOSE EXEC
         def exec(flags, service, cmd):
             if flags == None:
