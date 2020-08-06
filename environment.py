@@ -6,69 +6,76 @@
 ## Mail: frederic.depuydt@outlook.com                                     ##
 ############################################################################
 
-from echo import echo;
-from docker import docker;
-from config import config;
-from command import command;
-import os, sys;
+from . import command, config, echo
+import os, sys
 
-class environment:
+DEFAULT_FILENAME = "~/.env"
 
-    @staticmethod # Environment GET variable
-    def get(variable, password = False, prompt = True):
-        variable = str(variable);
-        if __debug__ :
-            echo.debug(variable);
+class Environment:
+    def __init__(self, filename = DEFAULT_FILENAME):
+        self.setFile(filename)        
+
+    # Environment SET file
+    def setFile(self, filename):
+        #self.config.close # TODO Close Current file        
+        self.filename = str(filename)
+        echo.debug('Opening `'+ self.filename +'` as Environment File.')
+        self.config = config.Config(self.filename,"SHELL")
+
+    # Environment GET file
+    def getFile(self):
+        return self.filename
+
+    # Environment REQUIRE file
+    def require(self, variable, password = False):
+        variable = str(variable)
         try:
-            value_1 = os.environ[variable];
-        except KeyError as e:
-            value_1 = None;
-        if __debug__ :
-            echo.debug(value_1);
-        
+            value = str(self.config.require(None, variable))
+            self.config.write()
+            echo.debug(variable + ': ' + value)
+            return value
+        except Exception as e:            
+            echo.error(str(e))
+            raise e
+
+    # Environment GET variable
+    def get(self, variable, password = False):
+        variable = str(variable)
+        try: # Trying to get the variable from system environment
+            value = self.config.get(None, variable)            
+            echo.debug(variable + ': ' + value)
+        except config.NoOptionError as e:
+            raise NoOptionError()
+        except Exception as e:            
+            echo.error(str(e))
+            raise e
+
+    # Environment SET variable
+    def set(self, variable, value, password = False):
+        variable = str(variable)
+        value = str(value)
+        echo.debug("Setting variable `" + variable + "`")
         try:
-            cfg = config("/etc/environment", "SHELL");
-            value_2 = cfg.get(None, variable);
-        except Exception as e:
-            value_2 = None;
-        if __debug__ :
-            echo.debug(value_2);
+            #os.environ[variable] = value
+            self.config.set(None, variable, value)
+            self.config.write()
+            #command.exec("echo $" + variable)
+            #command.exec("export " + variable)
+        except config.NoOptionError as e:
+            raise NoOptionError()
+        except KeyError as e:            
+            echo.error(str(e))
+            raise e
 
-        if (value_1 == value_2 and not value_1 == None) or (value_1 == None and not value_2 == None):
-            if value_1 == None:
-                environment.set(variable, value_2, password);
-            return value_2;
-        else:
-            if prompt:
-                value = echo.prompt(variable, password);
-                environment.set(variable, value, password);
-                return value;
-            else:
-                echo.error("Differences in environment values for `" + variable + "`");
-                sys.exit(1);
-                
+def get(variable, password = False):
+    variable = str(variable)
+    try: # Trying to get the variable from system environment
+        value = str(os.environ[variable])           
+        echo.debug(variable + ': ' + value)
+        return value
+    except Exception as e:            
+        echo.error(str(e))
+        raise e
 
-    @staticmethod # Environment SET variable
-    def set(variable, value, password = False):
-        variable = str(variable);
-        value = str(value);
-        if __debug__:
-            echo.debug("setting variable `" + variable + "`");
-        try:
-            os.environ[variable] = value;
-            cfg = config("/etc/environment", "SHELL");            
-            cfg.set(None, variable, value);
-            cfg.write();
-            command.exec("echo $" + variable);
-            command.exec("export " + variable);
-        except KeyError as e:
-            echo.error(str(e));
-            sys.exit(1);
-
-
-class environmentError(Exception):
+class NoOptionError(Exception):
     pass
-
-
-if __debug__:
-    echo.debug("imported `environment.py`");

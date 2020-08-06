@@ -6,7 +6,7 @@
 ## Mail: frederic.depuydt@outlook.com                                     ##
 ############################################################################
 
-from echo import echo
+from . import echo
 import os
 
 class directory:

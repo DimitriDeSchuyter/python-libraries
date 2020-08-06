@@ -6,62 +6,51 @@
 ## Mail: frederic.depuydt@outlook.com                                     ##
 ############################################################################
 
-from color import color
+from . import color
 
-class echo:
-    # CONSTRUCTOR
-    def __init__(self, text):
-        echo.warning("Unnecessary use of echo class, use print instead");
-        print(text);
+# TITLE BLOCK
+def title(title):
+    title = str(title)
+    width   = 100
+    w_space = width - 10 - len(title)
+    w_left  = int(w_space / 2)
+    w_right = int(w_space - w_left)
+    title   = (" " * w_left) + color.cyan + title + color.default + (" " * w_right)
+    print("")
+    print(color.red + ("*" * width) + color.default)
+    print(color.red + "*****" + color.default + title + color.red + "*****" + color.default)
+    print(color.red  + ("*" * width) + color.default)
 
-    @staticmethod # TITLE BLOCK
-    def title(title):
-        title = str(title);
-        width   = 100;
-        w_space = width - 10 - len(title);
-        w_left  = int(w_space / 2);
-        w_right = int(w_space - w_left);
-        title   = (" " * w_left) + color.cyan + title + color.default + (" " * w_right);
-        print("");
-        print(color.red + ("*" * width) + color.default);
-        print(color.red + "*****" + color.default + title + color.red + "*****" + color.default);
-        print(color.red  + ("*" * width) + color.default);
+# SECTION LINE
+def section(section, text, col = color.cyan):
+    section = str(section)
+    text = str(text)
+    if section is None:
+        print(col + text + color.default)
+    else:
+        print(col + section + color.default +  ": " + text)
 
+# COMMENT LINE
+def comment(text):
+    section(None, text, color.green)
 
-    @staticmethod # SECTION LINE
-    def section(section, text, col = color.cyan):
-        section = str(section);
-        text = str(text);
-        if section is None:
-            print(col + text + color.default);
-        else:
-            print(col + section + ": " + color.default + text);
+# COMMENT LINE
+def notice(text):
+    section("NOTICE", text, color.green)
 
-    @staticmethod # COMMENT LINE
-    def comment(text):
-        echo.section(None, text, color.green);
+# WARNING LINE
+def warning(text):
+    section("WARNING", text, color.yellow)
 
-    @staticmethod # COMMENT LINE
-    def notice(text):
-        echo.section(" NOTICE", text, color.green);
+# ERROR LINE
+def error(text):
+    section("ERROR", text, color.red)
 
-    @staticmethod # WARNING LINE
-    def warning(text):
-        echo.section(" WARNING", text, color.yellow);
+# DEBUG LINE
+def debug(text):
+    section("DEBUG", text, color.purple)
 
-    @staticmethod # ERROR LINE
-    def error(text):
-        echo.section(" ERROR", text, color.red);
-
-    @staticmethod # DEBUG LINE
-    def debug(text):
-        echo.section(" DEBUG", text, color.purple);
-
-    @staticmethod # PROMPT LINE
-    def prompt(variable, password = False):
-        echo.section(" PROMPT", variable + " = ", color.green);
-        return input("");
-
-if __debug__:
-    echo.debug("imported `echo.py`");
-
+# PROMPT LINE
+def prompt(variable, password = False):
+    section("PROMPT", variable + " = ", color.green)
+    return input("")
