@@ -1,12 +1,11 @@
 #!/usr/bin/env python3
 
 ############################################################################
-## LIBRARY for DOCKER Handling                                            ##
 ## Author: Frederic Depuydt                                               ##
 ## Mail: frederic.depuydt@outlook.com                                     ##
 ############################################################################
 
-from . import echo, command
+from .. import echo, command
 
 import os, sys
 
@@ -82,6 +81,22 @@ class Compose:
         if cmd == None:
             cmd = ""
         command.exec("docker-compose run " + flags + " " + service + " " + cmd)
+
+    @staticmethod # DOCKER COMPOSE PULL
+    def pull(flags = None, extra = None):
+        if flags == None:
+            flags = ""
+        if extra == None:
+            extra = ""
+        command.exec("docker-compose pull " + flags + " " + extra)
+
+    @staticmethod # DOCKER COMPOSE BUILD
+    def build(flags = None, extra = None):
+        if flags == None:
+            flags = ""
+        if extra == None:
+            extra = ""
+        command.exec("docker-compose build " + flags + " " + extra)
 
     @staticmethod # DOCKER COMPOSE DOWN
     def down(flags = None, extra = None):

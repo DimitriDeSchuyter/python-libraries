@@ -9,11 +9,23 @@
 from . import echo
 import os
 
-class directory:
+from pprint import pprint
+
+class Directory():
+
+    path = ""
+
+    def __init__(self, path):
+        self.path = path
+        if not os.path.isdir(path):
+            raise FileNotFoundError(path)
+
+    def __str__(self):
+        return str(self.path)
 
     @staticmethod # DIRECTORY CREATE
     def create(path):
         try:
-            os.mkdir(path);
+            os.mkdir(path)
         except FileExistsError as e:
-            echo.notice("Directory exists: " + str(e));
+            echo.notice("Directory exists: " + str(e))

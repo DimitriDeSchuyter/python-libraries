@@ -1,69 +1,82 @@
 #!/usr/bin/env python3
 
 ############################################################################
-## LIBRARY for File Handling                                              ##
 ## Author: Frederic Depuydt                                               ##
 ## Mail: frederic.depuydt@outlook.com                                     ##
 ############################################################################
 
 from . import echo
-import os
+import os, shutil
 from errno import ENOENT, EACCES, EPERM
 
-CREATE_IF_NOT_EXISTS = False
+def exists(path):
+    if os.path.exists(path):
+        return True
+    try:
+        path = os.path.expanduser(path)
+        return os.path.exists(path)
+    except Exception as e:
+        echo.error(str(e))
+        raise
 
-class File:   
+def copy(src, dst):
+    try:
+        shutil.copyfile(src, dst)
+    except Exception as e:
+        echo.error(str(e))
+        raise
+
+
+class File:
+
+    path = ""
+    mode = "r"
 
     # CONSTRUCTOR
-    def __init__(self, path, mode):
-        self.path = str(path);
-        self.mode = str(mode);
-        self.open();
+    def __init__(self, path, mode = "r"):
+        self.path = str(path)
+        self.setMode(mode)
+        self.exists()
+        self.open()
+
+    def __str__(self):
+        return str(self.path)
+
+    def setMode(self, mode):
+        self.mode = mode
 
     def exists(self):
         if os.path.exists(self.path):
             return True
-        try:
-            self.path = os.path.expanduser(self.path)
-            return os.path.exists(self.path)
-        except Exception as e:
-            echo.error(str(e))
-            raise
+        self.path = os.path.expanduser(self.path)
+        return os.path.exists(self.path)
 
     def open(self):
-        try:
-            if not self.exists():
-                if CREATE_IF_NOT_EXISTS:
-                    self.handle = open(self.path, "w+")    
-                else:
-                    echo.error("File doesn't exist: " + self.path)
-                    exit(1)
-            else:
-                self.handle = open(self.path, self.mode)
-        except Exception as e:
-            echo.error(str(e))
-            raise
-
-
-    def write(self, text):
-        try:
-            self.handle.write(str(text))            
-            return True
-        except Exception as e:
-            echo.error(str(e))
-            raise
+        self.handle = open(self.path, self.mode)
 
     def read(self):
-        try:
-            return self.handle.read()
-        except Exception as e:
-            echo.error(str(e))
-            raise
+        self.content = self.handle.read()
+        return self.content
+
+    def seek(self, pointer):
+        return self.handle.seek(pointer)
+
+    def truncate(self, size=None):
+        if size == None:
+            return self.handle.truncate()
+        else:
+            return self.handle.truncate(size)
+
+    def clear(self):
+        self.seek(0)
+        self.truncate()
+
+    def write(self, content = None):
+        if not content == None:
+            self.content = str(content)
+        self.handle.write(self.content)
+        return True
 
     def close(self):
-        try:
-            self.handle.close()
-            return True
-        except Exception as e:
-            echo.error(str(e))
-            raise
+        self.handle.close()
+        return True
