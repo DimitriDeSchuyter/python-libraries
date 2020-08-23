@@ -8,27 +8,34 @@
 
 from . import color
 
+flush = False
+
+def setFlush(value):
+    global flush
+    flush = value
+
 # TITLE BLOCK
 def title(title):
+    global flush
     title = str(title)
     width   = 100
     w_space = width - 10 - len(title)
     w_left  = int(w_space / 2)
     w_right = int(w_space - w_left)
     title   = (" " * w_left) + color.cyan + title + color.default + (" " * w_right)
-    print("")
-    print(color.red + ("*" * width) + color.default)
-    print(color.red + "*****" + color.default + title + color.red + "*****" + color.default)
-    print(color.red  + ("*" * width) + color.default)
+    print("", flush)
+    print(color.red + ("*" * width) + color.default, flush)
+    print(color.red + "*****" + color.default + title + color.red + "*****" + color.default, flush)
+    print(color.red  + ("*" * width) + color.default, flush)
 
 # SECTION LINE
 def section(section, text, col = color.cyan):
     section = str(section)
     text = str(text)
     if section is None:
-        print(col + text + color.default)
+        print(col + text + color.default, flush)
     else:
-        print(col + section + color.default +  ": " + text)
+        print(col + section + color.default +  ": " + text, flush)
 
 # COMMENT LINE
 def comment(text):
