@@ -30,6 +30,7 @@ def title(title):
 
 # SECTION LINE
 def section(section, text, col = color.cyan):
+    global flush
     section = str(section)
     text = str(text)
     if section is None:
