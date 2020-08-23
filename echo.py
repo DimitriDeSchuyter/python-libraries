@@ -16,7 +16,7 @@ def setFlush(value):
 
 # TITLE BLOCK
 def title(title):
-    global flush
+    global _flush
     title = str(title)
     width   = 100
     w_space = width - 10 - len(title)
