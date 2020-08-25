@@ -1,1 +1,6 @@
+## Compilation files
 __pycache__
+
+## VS Code files
+.vs
+*.code-workspace
