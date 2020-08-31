@@ -17,10 +17,11 @@ class Shellconfig(config.Config):
     
     def set(self, variable, value):
         try:
-            self.parser.set('DEFAULT', variable, "\"" + value + "\"")
+            self.parser.set('DEFAULT', variable, "\"" + value + "\"")            
         except (configparser.NoSectionError) as e:
             self.parser.add_section('DEFAULT')
             self.parser.set('DEFAULT', variable, "\"" + value + "\"")
+        return value
 
     def get(self, variable, default = None):
         try:

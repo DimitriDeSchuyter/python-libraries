@@ -24,6 +24,7 @@ class Jsonconfig(config.Config):
 
     def set(self, variable, value):
         self.json[variable] = value
+        return value
 
     def write(self):
         self.clear()

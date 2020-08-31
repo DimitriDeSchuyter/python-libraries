@@ -27,6 +27,7 @@ class Iniconfig(config.Config):
         except (configparser.NoSectionError) as e:
             self.parser.add_section(self.section)
             self.parser.set(self.section, variable, value)
+        return value
 
     def get(self, variable, default = None):  
         try:
