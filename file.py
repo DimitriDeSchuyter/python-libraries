@@ -26,7 +26,18 @@ def copy(src, dst):
         echo.error(str(e))
         raise
 
-
+def append(src, dst):
+    try:
+        fin = File(src, "r")
+        data2 = fin.read()
+        fin.close()
+        fout = File(dst, "a")
+        fout.write(data2)
+        fout.close()
+    except Exception as e:
+        echo.error(str(e))
+        raise
+    
 class File:
 
     path = ""
