@@ -28,7 +28,7 @@ class Jsonconfig(config.Config):
 
     def write(self):
         self.clear()
-        super().write(json.dumps(self.json))
+        super().write(json.dumps(self.json, indent=4, sort_keys=True))
 
     def print(self):
         pass

@@ -1,7 +1,6 @@
 #!/usr/bin/env python3
 
 ############################################################################
-## LIBRARY for COMMAND Handling                                           ##
 ## Author: Frederic Depuydt                                               ##
 ## Mail: frederic.depuydt@outlook.com                                     ##
 ############################################################################

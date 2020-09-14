@@ -1,7 +1,6 @@
 #!/usr/bin/env python3
 
 ############################################################################
-## LIBRARY for Directory Handling                                         ##
 ## Author: Frederic Depuydt                                               ##
 ## Mail: frederic.depuydt@outlook.com                                     ##
 ############################################################################

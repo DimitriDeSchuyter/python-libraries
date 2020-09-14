@@ -1,7 +1,6 @@
 #!/usr/bin/env python3
 
 ############################################################################
-## LIBRARY for ECHO Handling                                              ##
 ## Author: Frederic Depuydt                                               ##
 ## Mail: frederic.depuydt@outlook.com                                     ##
 ############################################################################
