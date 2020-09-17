@@ -18,7 +18,7 @@ setup(
     keywords = "depuydt libraries",
     url = "https://github.com/fredericdepuydt/python-libraries",
     packages=['depuydt', 'tests'],
-    long_description=read('README'),
+    long_description=read('README.md'),
     classifiers=[
         "Development Status :: 1 - Alpha",
         "Topic :: Depuydt libraries",
