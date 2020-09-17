@@ -1,6 +1,6 @@
 # Content of test_sample.py
 
-from src.depuydt import echo
+from depuydt import echo
 
 def test_echo():
     echo.notice("Testing notice message")
