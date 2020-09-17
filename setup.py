@@ -16,8 +16,12 @@ setup(
     description = ("A basic set of library functions."),
     license = "GPL-3.0",
     keywords = "depuydt libraries",
-    url = "https://github.com/fredericdepuydt/python-libraries",
-    packages=['depuydt', 'tests'],
+    url = "https://github.com/fredericdepuydt/python-libraries",    
+    package_dir={"": "src"},
+    packages=find_packages(
+        where="src",
+        exclude=["contrib", "docs", "tests*", "tasks"],
+    ),
     long_description=read('README.md'),
     classifiers=[
         "Development Status :: 1 - Alpha",
