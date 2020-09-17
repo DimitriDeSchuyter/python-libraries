@@ -5,4 +5,9 @@
 ## Mail: frederic.depuydt@outlook.com                                     ##
 ############################################################################
 
-from . import config, database, docker, mail, system
+from depuydt.system import link
+
+def test_file():
+    assert link.exists("non-existing-file") == False
+    assert link.exists("tests") == True
+    

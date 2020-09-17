@@ -22,6 +22,7 @@ setup(
         where="src",
         exclude=["contrib", "docs", "tests*", "tasks"],
     ),
+    install_requires=["influxdb"],
     long_description=read('README.md'),
     classifiers=[
         "Development Status :: 1 - Alpha",

@@ -8,7 +8,15 @@
 from . import echo
 import os
 
-from pprint import pprint
+def exists(path):
+    if os.path.isdir(path):
+        return True
+    try:
+        path = os.path.expanduser(path)
+        return os.path.isdir(path)
+    except Exception as e:
+        echo.error(str(e))
+        raise
 
 class Directory():
 

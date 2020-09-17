@@ -5,4 +5,9 @@
 ## Mail: frederic.depuydt@outlook.com                                     ##
 ############################################################################
 
-from . import config, database, docker, mail, system
+from depuydt import directory
+
+def test_directory():
+    assert directory.exists("non-existing-directory") == False
+    assert directory.exists("tests") == True
+    
