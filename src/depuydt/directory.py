@@ -8,15 +8,26 @@
 from . import echo
 import os
 
-def exists(path):
+def get(path: str):
+    path = str(path)
     if os.path.isdir(path):
-        return True
+        return path
+    path = os.path.expanduser(path)
+    if os.path.isdir(path):
+        return path
+    else:
+        return None
+
+def exists(path: str):
+    return get(path) is not None
+
+def create(path):
     try:
-        path = os.path.expanduser(path)
-        return os.path.isdir(path)
-    except Exception as e:
-        echo.error(str(e))
-        raise
+        os.mkdir(path)
+        return Directory(path)
+    except FileExistsError as e:
+        echo.warning("Directory exists: " + str(e))
+        return Directory(path)
 
 class Directory():
 
@@ -30,9 +41,4 @@ class Directory():
     def __str__(self):
         return str(self.path)
 
-    @staticmethod # DIRECTORY CREATE
-    def create(path):
-        try:
-            os.mkdir(path)
-        except FileExistsError as e:
-            echo.notice("Directory exists: " + str(e))
+    

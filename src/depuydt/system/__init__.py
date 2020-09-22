@@ -5,4 +5,4 @@
 ## Mail: frederic.depuydt@outlook.com                                     ##
 ############################################################################
 
-from . import link
+from .link import Link

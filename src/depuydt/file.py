@@ -9,15 +9,27 @@ from . import echo
 import os, shutil
 from errno import ENOENT, EACCES, EPERM
 
-def exists(path):
+def get(path: str):    
+    path = str(path)
     if os.path.exists(path):
-        return True
+        return path
+    path = os.path.expanduser(path)
+    if os.path.exists(path):
+        return path
+    else:
+        return None
+
+def exists(path: str):
+    return get(path) is not None
+
+def create(path: str):
     try:
-        path = os.path.expanduser(path)
-        return os.path.exists(path)
-    except Exception as e:
-        echo.error(str(e))
-        raise
+        open(path, "w+").close()
+        return File(path)
+    except FileExistsError as e:
+        echo.warning("File exists: " + str(e))
+        return File(path)
+
 
 def copy(src, dst):
     try:
