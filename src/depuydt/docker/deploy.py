@@ -8,11 +8,14 @@
 from .. import config, directory, docker, echo, file
 import os, sys
 
+
+
 from pprint import pprint
 
 
 class Deploy():
 
+    
     def __init__(self):
         self.cwd = os.getcwd() # Current Work Directory
         try:
@@ -54,19 +57,26 @@ class Deploy():
 
     def run(self):
         if(self.state == 0):
-            return self.pull()
+            return self.initconf()
         elif(self.state == 1):
-            return self.build()
+            return self.pull()
         elif(self.state == 2):
-            return self.create()
+            return self.build()
         elif(self.state == 3):
-            return self.preconf()
+            return self.create()
         elif(self.state == 4):
-            return self.start()
+            return self.preconf()
         elif(self.state == 5):
+            return self.start()
+        elif(self.state == 6):
             return self.postconf()
         else:
             raise Exception("State ran out of bounds")                
+
+    def initconf(self):
+        if file.exists(str(self.dwd) + "/init.py"):
+            self.echoTitle("Applying init-configuration")
+            import init
 
     def pull(self):
         self.echoTitle("Pulling images")
