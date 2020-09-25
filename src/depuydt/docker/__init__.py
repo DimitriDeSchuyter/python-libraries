@@ -37,7 +37,7 @@ def logs(flags, container):
 class Container:
     @staticmethod # CONTAINER EXISTS
     def exists(container):
-        cmd = "docker ps -q -f name=\"^" + container.replace("\"", "\\\"") + "$\""
+        cmd = "docker ps -aq -f name=\"^" + container.replace("\"", "\\\"") + "$\""
         id = len(list(filter(None,command.exec(cmd, False).split("\n"))))
         if id == 0:
             raise DockerError("Container `" + container + "` doesn't exist")
